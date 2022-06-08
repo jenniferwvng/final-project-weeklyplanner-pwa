@@ -39,20 +39,28 @@ app.post("/createtask", async (req, res) => {
   //after first task is created (check validate with find() to see if exists), only do update task model to save in same collection
   //what happens if findoneanddelete() on id with tasks until 0 tasks, will collection still remain? (i.e. === true)
 
-  //something like this:
-  // Task.update(
-  //   //this userId to be same as userId in user login (to sort tasks connected to user)
-  //   { _id: userId },
-  //   { $push: { tasks: name, date, done }},
-  //   done
-  // )
-
   try {
     const newTask = await new Task({userId, tasks: [{name, date, done}]});
     newTask.save();
     res.status(201).json({task: newTask._id });
   } catch(err) {
     res.status(400).json({message: 'Could not create task', errors: err.message})
+  }
+});
+
+//Adds new task object to existing array of tasks in a collection with specific id
+app.post("/addtask", async (req, res) => {
+  const { name, date, done } = req.body;
+
+  try {
+  const addTask = await Task.findOneAndUpdate(
+    { userId: 555 },
+    { $push: {tasks: [{ name, date, done}]} }
+  ).exec();
+  //the returned new collection will not immediately display in res.json but will in mongodb database collection
+  res.status(201).json({ addTask });
+  } catch(err) {
+    res.status(400).json({message: 'Could not add another task', errors: err.message})
   }
 });
 
