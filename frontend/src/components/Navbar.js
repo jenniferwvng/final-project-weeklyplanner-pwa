@@ -6,6 +6,8 @@ import {
     Link
   } from "react-router-dom";
 
+// import styled from 'styled-components';
+
 import Userpage from './Userpage';
 import Weekly from './Weekly';
 import Daily from './Daily';
