@@ -27,14 +27,31 @@ const Weekly = () => {
     )
   }
 
+  const deleteTaskById = async (itemId) => {
+    console.log(itemId)
+    try {
+      const response = await fetch(`http://localhost:8080/deletetask/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+         'Content-type': 'application/json; charset=UTF-8' 
+        },
+      });
+      //instead of catching the fetch response here, make useEffect listen to changes in dependency array?
+      //for automatic re-rendering when tasks are deleted (or added/modified in other functions as well)
+    } catch(err) {
+        console.error(err);
+    }
+  }
+
   return (
     <div>
       <h1>Weekly page</h1>
       {jsonRes.map(item => {
         return (
-          <div style={{display: 'flex'}}>
+          <div style={{display: 'flex'}} onClick={() => deleteTaskById(item._id)}>
           <p style={{margin: '10px'}}>Task: {item.name}</p>
           <p style={{margin: '10px'}}>Date: {item.date}</p>
+          <p style={{margin: '10px'}}>ID: {item._id}</p>
           </div>
         )
       })}

@@ -101,8 +101,27 @@ app.get("/gettask", async (req, res) => {
   //point to app.local.userId, since that value is created through /signup or /signin endpoint, thus we have to run that one first.
   //Unless we force the user to login first thing they do in the website before creating any task, since we could fetch that userId and 
   //save it to app.locals.userId to user in subsequent endpoint interactions
-  const selectTask = await Task.findOne({ userId: 555 }).exec();
+  const selectTask = await Task.findOne({ userId: app.locals.userId }).exec();
+  //add if user, then app.locals.userId inside findone, else, another message
   res.status(201).json({ selectTask });
+});
+
+app.delete("/deletetask/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log('req params:' + req.params.id)
+  const convertToObjectId = mongoose.Types.ObjectId(id);
+
+  try {
+    await Task.findOneAndUpdate(
+      { userId: app.locals.userId }, 
+      { $pull: {tasks: { _id: convertToObjectId } } } 
+    ).exec();
+    
+    res.status(201).json({ message: 'Deleted task'});
+    
+  } catch(err) {
+    res.status(400).json({message: 'Could not delete task', errors: err.message})
+  }
 });
 
 app.post("/signup", async (req, res) => {
