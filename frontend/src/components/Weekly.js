@@ -48,10 +48,11 @@ const Weekly = () => {
       <h1>Weekly page</h1>
       {jsonRes.map(item => {
         return (
-          <div style={{display: 'flex'}} onClick={() => deleteTaskById(item._id)}>
+          <div style={{display: 'flex'}}>
           <p style={{margin: '10px'}}>Task: {item.name}</p>
           <p style={{margin: '10px'}}>Date: {item.date}</p>
           <p style={{margin: '10px'}}>ID: {item._id}</p>
+          <button onClick={() => deleteTaskById(item._id)}>Delete task</button>
           </div>
         )
       })}
