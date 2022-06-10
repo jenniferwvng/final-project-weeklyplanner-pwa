@@ -1,4 +1,4 @@
-import React, { useEffect ,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Weekly = () => {
   const [jsonRes, setJsonRes] = useState([]);
@@ -16,6 +16,8 @@ const Weekly = () => {
     }
     getUserTasks();
   }, []);
+
+  //make it listen to changes in the collection, or implement redux to display directly while newest update from database will render in next refresh of page
 
   if(!jsonRes.length) {
     return (
