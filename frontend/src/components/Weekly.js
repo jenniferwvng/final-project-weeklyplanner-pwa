@@ -16,7 +16,7 @@ const Weekly = () => {
       }
     }
     getUserTasks();
-  }, []);
+  }, [jsonRes]);
 
   //make it listen to changes in the collection, or implement redux to display directly while newest update from database will render in next refresh of page
 
