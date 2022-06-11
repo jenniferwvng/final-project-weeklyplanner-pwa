@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import AddtaskForm from './AddtaskForm';
 
 const Weekly = () => {
   const [jsonRes, setJsonRes] = useState([]);
@@ -19,18 +20,10 @@ const Weekly = () => {
 
   //make it listen to changes in the collection, or implement redux to display directly while newest update from database will render in next refresh of page
 
-  if(!jsonRes.length) {
-    return (
-      <>
-        <p>No weekly tasks set - add some</p>
-      </>
-    )
-  }
-
   const deleteTaskById = async (itemId) => {
     console.log(itemId)
     try {
-      const response = await fetch(`http://localhost:8080/deletetask/${itemId}`, {
+      await fetch(`http://localhost:8080/deletetask/${itemId}`, {
         method: 'DELETE',
         headers: {
          'Content-type': 'application/json; charset=UTF-8' 
@@ -43,9 +36,19 @@ const Weekly = () => {
     }
   }
 
+  if(!jsonRes.length) {
+  return (
+    <>
+      <h1>Weekly page</h1>
+      <p>Login first to see and add tasks</p>
+    </>
+  )
+  }
+
   return (
     <div>
       <h1>Weekly page</h1>
+      <AddtaskForm />
       {jsonRes.map(item => {
         return (
           <div style={{display: 'flex'}}>

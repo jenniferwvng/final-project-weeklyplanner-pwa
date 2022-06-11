@@ -101,9 +101,13 @@ app.get("/gettask", async (req, res) => {
   //point to app.local.userId, since that value is created through /signup or /signin endpoint, thus we have to run that one first.
   //Unless we force the user to login first thing they do in the website before creating any task, since we could fetch that userId and 
   //save it to app.locals.userId to user in subsequent endpoint interactions
+  try {
   const selectTask = await Task.findOne({ userId: app.locals.userId }).exec();
   //add if user, then app.locals.userId inside findone, else, another message
   res.status(201).json({ selectTask });
+  } catch(err) {
+    res.status(400).json({message: 'Could not get tasks', errors: err.message})
+  }
 });
 
 app.delete("/deletetask/:id", async (req, res) => {
@@ -118,7 +122,7 @@ app.delete("/deletetask/:id", async (req, res) => {
     ).exec();
     
     res.status(201).json({ message: 'Deleted task'});
-    
+
   } catch(err) {
     res.status(400).json({message: 'Could not delete task', errors: err.message})
   }
