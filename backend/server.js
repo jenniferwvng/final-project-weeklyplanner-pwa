@@ -10,7 +10,7 @@ mongoose.Promise = Promise;
 const taskModel = new mongoose.Schema({
   userId: Object, //the userid from login here/create user, use query to find in endpoint
   tasks: [
-    {name: String, date: Number, done: Boolean}
+    {name: String, date: String, done: Boolean}
   ],
 });
 
@@ -116,17 +116,21 @@ app.delete("/deletetask/:id", async (req, res) => {
   const convertToObjectId = mongoose.Types.ObjectId(id);
 
   try {
-    await Task.findOneAndUpdate(
+    const test = await Task.findOneAndUpdate(
       { userId: app.locals.userId }, 
       { $pull: {tasks: { _id: convertToObjectId } } } 
     ).exec();
     
-    res.status(201).json({ message: 'Deleted task'});
+    res.status(201).json({ test });
 
   } catch(err) {
     res.status(400).json({message: 'Could not delete task', errors: err.message})
   }
 });
+
+//navigate react? to navigate to user page after successful user account creation
+//logged out mode: if no user, render signup and signin pages
+//logged in mode: if user (either logged in or created), render signout
 
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
@@ -148,6 +152,8 @@ app.post('/signin', async (req, res) => {
   app.locals.userId = user._id;
   res.status(201).json({ user, userId: user._id });
   // if (user && bcrypt.compareSync(req.body.password, user.password)) {
+    //probably also need to move this here instead, to set userId only when login successful
+    //app.locals.userId = user._id;
   //   res.cookie('accessToken', user.accessToken, { httpOnly: true });
   //   res.status(201).json({id: user._id, accessToken: user.accessToken});
   //   console.log(res.getHeaders())
@@ -155,6 +161,10 @@ app.post('/signin', async (req, res) => {
   //   res.json({notFound: true});
   // } 
 });
+
+//when doing signut endpoint, check if need to restart/end node server for erasing app.locals.userId,
+//or if its enough with the logic in signin endpoint
+//probably need to erase it when pressing logout, could do that in backend? like exit current node lifecycle thing as last thing?
 
 // Start the server
 app.listen(port, () => {

@@ -3,6 +3,7 @@ import AddtaskForm from './AddtaskForm';
 
 const Weekly = () => {
   const [jsonRes, setJsonRes] = useState([]);
+  const [deletedTask, setDeletedTask] = useState([]);
 
   useEffect(() => {
     const getUserTasks = async () => {
@@ -16,21 +17,20 @@ const Weekly = () => {
       }
     }
     getUserTasks();
-  }, [jsonRes]);
-
-  //make it listen to changes in the collection, or implement redux to display directly while newest update from database will render in next refresh of page
+  }, [deletedTask]);
 
   const deleteTaskById = async (itemId) => {
     console.log(itemId)
     try {
-      await fetch(`http://localhost:8080/deletetask/${itemId}`, {
+      const deleteAction = await fetch(`http://localhost:8080/deletetask/${itemId}`, {
         method: 'DELETE',
         headers: {
          'Content-type': 'application/json; charset=UTF-8' 
         },
       });
-      //instead of catching the fetch response here, make useEffect listen to changes in dependency array?
-      //for automatic re-rendering when tasks are deleted (or added/modified in other functions as well)
+      const deleteResponse = await deleteAction.json();
+      //To enable re-render when change detected, and to avoid infinity loop in useEffect, we have to listen to a separate state rather than the jsonRes state from GET
+      setDeletedTask(deleteResponse);
     } catch(err) {
         console.error(err);
     }
