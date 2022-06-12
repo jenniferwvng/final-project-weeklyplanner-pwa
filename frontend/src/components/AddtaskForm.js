@@ -28,7 +28,8 @@ const AddtaskForm = () => {
     const [date, setDate] = useState(dateOfToday);
     const [done, setDone] = useState(false);
     const [addedTask, setAddedTask] = useState([]);
- 
+    console.log(addedTask);
+    
     const AddTask = async (e) => {
         e.preventDefault();
 
