@@ -62,6 +62,7 @@ const AddtaskForm = () => {
       Date to be done
         <select  onChange={(e) => setDate(e.target.value)}>
         <option value={dateOfToday}>Today</option>
+        {/* could I improve this using .map and making use of the built in index value? Or just move this into a function with parameter as helper function*/}
         <option value={weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)}> {weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)} </option>
         <option value={weekdays.get(addWeekdays(2)) + ' ' + addUpcomingDates(2)}> {weekdays.get(addWeekdays(2)) + ' ' + addUpcomingDates(2)} </option>
         <option value={weekdays.get(addWeekdays(3)) + ' ' + addUpcomingDates(3)}> {weekdays.get(addWeekdays(3)) + ' ' + addUpcomingDates(3)} </option>

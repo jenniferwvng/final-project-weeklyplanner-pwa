@@ -45,48 +45,35 @@ const Weekly = () => {
   )
   }
 
-   const nameOfWeekdays = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
+  const nameOfWeekdays = ['sun', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat'];
 
-  const loopOverWeekdays = () => {
-    let test = '';
-    for (let i = 0; i < nameOfWeekdays.length; i++) {
-       console.log(nameOfWeekdays[i]);
-    }
-    
-  }
-
-  console.log(loopOverWeekdays())
-
+  //get the date of today like getdate()-1, then erase yesterdays tasks/move them to "garbage collection", e.g. if yesterday was 
+  //2022-06-11, then .include tasks that are that and filter out
   return (
     <div>
       <h1>Weekly page</h1>
       <AddtaskForm />
-      {jsonRes.map(item => {
-        //somehow loop through and generate new weekdays to compare in .includes w/o having to hardcode every string as it is now
-        if (item.date.includes('mon')) {
-          return (
-            <div style={{backgroundColor: 'pink'}}>
-              <h1>mon</h1>
-              <p style={{margin: '10px'}}>Task: {item.name}</p>
-              <p style={{margin: '10px'}}>Date: {item.date}</p>
-              <p style={{margin: '10px'}}>ID: {item._id}</p>
-              <button onClick={() => deleteTaskById(item._id)}>Delete task</button>
-            </div>
-          )
-        } else {
-          return (
-            //if item.date === contains mon, render inside div with h1 monday, else if item.date contains tues, render inside div w... etc.
-            //could be flex divs with flexdirection column, left to right, to make space for more tasks
-            <div style={{display: 'flex'}}>
-            <p style={{margin: '10px'}}>Task: {item.name}</p>
-            <p style={{margin: '10px'}}>Date: {item.date}</p>
-            <p style={{margin: '10px'}}>ID: {item._id}</p>
-            <button onClick={() => deleteTaskById(item._id)}>Delete task</button>
-            </div>
-          )
-        }
-      //})
-      
+      {nameOfWeekdays.map((weekday, index) => {
+        return (
+          //index same as index of getday()
+          <div style={{border: '1px solid black', display: 'flex', flexDirection: 'column'}}>
+            <h1>{weekday}</h1>
+            <p>{index}</p>
+            {jsonRes.map(item => {
+              return (
+                <>
+                {item.date.includes(weekday) &&               
+                <div style={{backgroundColor: 'beige', margin: '10px'}}>
+                  <p style={{margin: '10px'}}>Task: {item.name}</p>
+                  <p style={{margin: '10px'}}>Date: {item.date}</p>
+                  <p style={{margin: '10px'}}>ID: {item._id}</p>
+                  <button onClick={() => deleteTaskById(item._id)}>Delete task</button>
+                </div>}
+                </>
+              )
+            })}
+          </div>
+        )
       })}
     </div>
   );
