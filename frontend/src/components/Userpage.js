@@ -4,18 +4,38 @@ const Userpage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
+const loginStateMessage = async () => {
+  try {
+    const response = await fetch('http://localhost:8080/secrets', {
+        method: 'POST',
+        headers: {                
+            'Content-Type': 'application/json',
+            'Authorization': sessionStorage.getItem('accessToken')
+        },
+        body: JSON.stringify({email: email})
+    });
+    const authorizedLogin = await response.json();
+    console.log(authorizedLogin);              
+     
+  } catch(err) {
+    console.error(err);
+  }
+}
+
   const validateSignin = async (e) => {
     e.preventDefault();
-
+    
     try {
       const response = await fetch('http://localhost:8080/signin', {
           method: 'POST',
           headers: {                
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({email: email})
+          body: JSON.stringify({email: email, password: password})
       });
       const authorizedLogin = await response.json();
+      sessionStorage.setItem('accessToken', authorizedLogin.accessToken);   
       console.log(authorizedLogin);              
        
     } catch(err) {
@@ -27,6 +47,7 @@ const Userpage = () => {
     try {
       const response = await fetch('http://localhost:8080/signout');
       const authorizedLogin = await response.json();
+      sessionStorage.removeItem('accessToken');
       console.log(authorizedLogin);
         
     } catch(err) {
@@ -54,6 +75,10 @@ const Userpage = () => {
         <div>
         <button onClick={SignoutUser}>Sign out</button>
         </div> 
+
+        <div>
+          <button onClick={loginStateMessage}>Check login status</button>
+        </div>
     </div>
   );
 }

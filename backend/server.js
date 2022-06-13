@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import crypto from 'crypto';
+import bcrypt from 'bcrypt';
+
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-mongo";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -31,10 +34,10 @@ const userModel = new mongoose.Schema({
     type: String,
     required: true
   },
-  // accessToken: {
-  //   type: String,
-  //   default: () => crypto.randomBytes(128).toString('hex')
-  // }
+  accessToken: {
+    type: String,
+    default: () => crypto.randomBytes(128).toString('hex')
+  }
 });
 
 const User = mongoose.model('User', userModel);
@@ -47,6 +50,17 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+const authenticateUser = async (req, res, next) => {
+  const user = await User.findOne({accessToken: req.header('Authorization')});
+  if (user) {
+    req.user = user;
+    res.json({loginData: 'You are now logged in,' + user.name})
+    next();
+  } else {
+    res.status(401).json({loginData: 'You are now logged out'});
+  }
+}
 
 // Start defining your routes here
 app.get("/", (req, res) => {
@@ -70,12 +84,6 @@ app.post("/createtask", async (req, res) => {
     res.status(400).json({message: 'Could not create task', errors: err.message})
   }
 });
-
-//middleware
-// const identifyUserId = (req, res) => {
-//   app.locals.userId = req.body.userId;
-//   next();
-// }
 
 //Adds new task object to existing array of tasks in a collection with specific id
 app.post("/addtask", async (req, res) => {
@@ -136,11 +144,14 @@ app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 //handle if duplicates on frontend, print message that says cannot create user due to duplicate, instead of printing user json
   try {
-  const user = await new User({ name, email, password });
+  const user = await new User({ name, email, password: bcrypt.hashSync(password, 10) });
   user.save();
-  console.log(user._id);
-  app.locals.userId = user._id;
-  res.status(201).json({ user });
+  
+  if (user) {
+    app.locals.userId = user._id;
+  }
+  
+  res.status(201).json({ user, accessToken: user.accessToken });
   } catch(err) {
     res.status(400).json({message: 'Could not add  user', errors: err.message})
   }
@@ -149,35 +160,27 @@ app.post("/signup", async (req, res) => {
 app.post('/signin', async (req, res) => {
   try {
     const user = await User.findOne({email: req.body.email});
-    
-    if (user) {
-      app.locals.userId = user._id;
-    }
 
-    res.status(201).json({ user, userId: user._id });
+    if (user && bcrypt.compareSync(req.body.password, user.password)) {
+      app.locals.userId = user._id;
+      res.status(201).json({user, accessToken: user.accessToken})
+    }
   } catch(err) {
     res.status(400).json({message: 'Could not signin user', errors: err.message})
   }
-  // if (user && bcrypt.compareSync(req.body.password, user.password)) {
-    //probably also need to move this here instead, to set userId only when login successful
-    //app.locals.userId = user._id;
-  //   res.cookie('accessToken', user.accessToken, { httpOnly: true });
-  //   res.status(201).json({id: user._id, accessToken: user.accessToken});
-  //   console.log(res.getHeaders())
-  // } else {
-  //   res.json({notFound: true});
-  // } 
 });
 
 app.get("/signout", (req, res) => {
   try {  
-     app.locals.userId = 'logged out';
+     app.locals.userId = '';
      console.log(app.locals.userId)
      res.status(201).json({messsage: app.locals.userId})
   } catch(err) {
     res.status(400).json({message: 'Could not signout user', errors: err.message})
   }
 });
+
+app.post("/secrets", authenticateUser);
 
 // Start the server
 app.listen(port, () => {
