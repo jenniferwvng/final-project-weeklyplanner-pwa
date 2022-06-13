@@ -147,10 +147,17 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post('/signin', async (req, res) => {
-  const user = await User.findOne({email: req.body.email});
+  try {
+    const user = await User.findOne({email: req.body.email});
+    
+    if (user) {
+      app.locals.userId = user._id;
+    }
 
-  app.locals.userId = user._id;
-  res.status(201).json({ user, userId: user._id });
+    res.status(201).json({ user, userId: user._id });
+  } catch(err) {
+    res.status(400).json({message: 'Could not signin user', errors: err.message})
+  }
   // if (user && bcrypt.compareSync(req.body.password, user.password)) {
     //probably also need to move this here instead, to set userId only when login successful
     //app.locals.userId = user._id;
@@ -162,9 +169,15 @@ app.post('/signin', async (req, res) => {
   // } 
 });
 
-//when doing signut endpoint, check if need to restart/end node server for erasing app.locals.userId,
-//or if its enough with the logic in signin endpoint
-//probably need to erase it when pressing logout, could do that in backend? like exit current node lifecycle thing as last thing?
+app.get("/signout", (req, res) => {
+  try {  
+     app.locals.userId = 'logged out';
+     console.log(app.locals.userId)
+     res.status(201).json({messsage: app.locals.userId})
+  } catch(err) {
+    res.status(400).json({message: 'Could not signout user', errors: err.message})
+  }
+});
 
 // Start the server
 app.listen(port, () => {
