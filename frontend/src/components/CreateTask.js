@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 const weekdays = new Map();
 weekdays.set(0, 'sun');
 weekdays.set(1, 'mon');
@@ -23,45 +22,45 @@ const addWeekdays = (numOfDays) => {
     return new Date(new Date(new Date(new Date()).setDate(new Date().getDate() + numOfDays))).getDay();
 }
 
-const AddtaskForm = () => {
-    const [name, setName] = useState('');
-    const [date, setDate] = useState(dateOfToday);
-    const [done, setDone] = useState(false);
-    const [addedTask, setAddedTask] = useState([]);
+const CreateTask = () => {
+    const [taskName, setTaskName] = useState('');
+    const [taskDate, setTaskDate] = useState(dateOfToday);
+    const [taskDone, setTaskDone] = useState(false);
 
-    const AddTask = async (e) => {
-        e.preventDefault();
+  const createTask = async (e) => {
+    e.preventDefault();
 
-        try {
-            const addAction = await fetch('http://localhost:8080/addtask', {
-              method: 'POST',
-              headers: {
-               'Content-type': 'application/json; charset=UTF-8' 
-              },
-              body: JSON.stringify({name, date, done})
-            });
-            const addResponse = await addAction.json();
-            setAddedTask(addResponse);
-          } catch(err) {
-              console.error(err);
-          }
+    try {
+        const response = await fetch('http://localhost:8080/createtask', {
+            method: 'POST',
+            headers: {                
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: taskName, date: taskDate, done: taskDone})
+        });
+        const authorizedLogin = await response.json();
+        console.log(authorizedLogin);                  
+    } catch(err) {
+        console.error(err);
     }
-    
+  }
+
   return (
-      <>
-    <form onSubmit={AddTask}>
+    <div>
+      <h1>Create your first task</h1>
+      <form onSubmit={createTask}>
     <label>
       Name of task
       <input 
         type="text" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
+        value={taskName} 
+        onChange={(e) => setTaskName(e.target.value)} 
       />
     </label>
     <label>
       Date to be done
-        <select  onChange={(e) => setDate(e.target.value)}>
-        <option value={date}>Today</option>
+        <select  onChange={(e) => setTaskDate(e.target.value)}>
+        <option value={taskDate}>Today</option>
         {/* could I improve this using .map and making use of the built in index value? Or just move this into a function with parameter as helper function*/}
         <option value={weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)}> {weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)} </option>
         <option value={weekdays.get(addWeekdays(2)) + ' ' + addUpcomingDates(2)}> {weekdays.get(addWeekdays(2)) + ' ' + addUpcomingDates(2)} </option>
@@ -75,16 +74,16 @@ const AddtaskForm = () => {
       Done
       <input 
         type="text" 
-        value={done} 
-        onChange={(e) => setDone(e.target.value)} 
+        value={taskDone} 
+        onChange={(e) => setTaskDone(e.target.value)} 
       />
     </label>
     <button>
         <input type="submit" value="Submit" />
     </button>
     </form>
-    </>
+    </div>
   );
 }
 
-export default AddtaskForm;
+export default CreateTask;

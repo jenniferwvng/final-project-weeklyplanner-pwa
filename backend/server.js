@@ -111,7 +111,6 @@ app.get("/gettask", async (req, res) => {
   //save it to app.locals.userId to user in subsequent endpoint interactions
   try {
   const selectTask = await Task.findOne({ userId: app.locals.userId }).exec();
-  //add if user, then app.locals.userId inside findone, else, another message
   res.status(201).json({ selectTask });
   } catch(err) {
     res.status(400).json({message: 'Could not get tasks', errors: err.message})
@@ -146,7 +145,7 @@ app.post("/signup", async (req, res) => {
   try {
   const user = await new User({ name, email, password: bcrypt.hashSync(password, 10) });
   user.save();
-  
+
   if (user) {
     app.locals.userId = user._id;
   }

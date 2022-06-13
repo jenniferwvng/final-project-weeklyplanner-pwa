@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AddtaskForm from './AddtaskForm';
+import CreateTask from './CreateTask';
 
 const Weekly = () => {
   const [jsonRes, setJsonRes] = useState([]);
@@ -41,6 +42,7 @@ const Weekly = () => {
     <>
       <h1>Weekly page</h1>
       <p>Login first to see and add tasks</p>
+      {sessionStorage.getItem('accessToken') && <CreateTask />}
     </>
   )
   }
