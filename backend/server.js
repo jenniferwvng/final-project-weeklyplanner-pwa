@@ -135,6 +135,33 @@ app.delete("/deletetask/:id", async (req, res) => {
   }
 });
 
+app.put("/updatetask/:id", async (req, res) => {
+  const { id } = req.params;
+  const { donestatus } = req.query;
+  console.log('req params:' + req.params.id + req.query.donestatus)
+  //const convertToObjectId = mongoose.Types.ObjectId(id);
+
+  try {
+    const test = await Task.findOneAndUpdate(
+      {
+        userId: app.locals.userId,
+        tasks: { $elemMatch: { _id: id } }
+      },
+      {
+        $set: {
+          "tasks.$.done": donestatus ,
+        },
+      },
+      {new: false, overwrite: false, upsert: false}
+    ).exec();
+    
+    res.status(201).json({ test });
+
+  } catch(err) {
+    res.status(400).json({message: 'Could not update task', errors: err.message})
+  }
+});
+
 //navigate react? to navigate to user page after successful user account creation
 //logged out mode: if no user, render signup and signin pages
 //logged in mode: if user (either logged in or created), render signout
