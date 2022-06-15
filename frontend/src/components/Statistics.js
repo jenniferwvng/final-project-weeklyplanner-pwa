@@ -48,6 +48,8 @@ const Statistics = () => {
             <p style={{margin: '10px'}}>Task: {item.name}</p>
             <p style={{margin: '10px'}}>Date: {item.date}</p>
             <p style={{margin: '10px'}}>ID: {item._id}</p>    
+            {/* instead of deletetask here, make it automatically delete tasks that are older than todays date,
+            and use this statistics page only for displaying numbers */}
             </div>
           }
           </>

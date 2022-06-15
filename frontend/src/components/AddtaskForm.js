@@ -48,7 +48,7 @@ const AddtaskForm = () => {
     }
     
   return (
-      <>
+      <div style={{ display: 'flex', flexDirection: 'column'}}>
     <form onSubmit={AddTask}>
     <label>
       Name of task
@@ -83,7 +83,7 @@ const AddtaskForm = () => {
         <input type="submit" value="Submit" />
     </button>
     </form>
-    </>
+    </div>
   );
 }
 

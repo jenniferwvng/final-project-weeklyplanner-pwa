@@ -10,27 +10,23 @@ import {
 
 import Userpage from './Userpage';
 import Weekly from './Weekly';
-import Daily from './Daily';
 import Statistics from './Statistics'
 
 const Navbar = () => {
   return (
-    <>
+    <div style={{display: 'flex', flexDirection: 'column'}}>
     <Router>
     <header>
     <nav>
-        <ul>
-        <li>
-          <Link to="/">Weekly</Link>
+        <ul style={{display: 'flex', listStyle: 'none', justifyContent: 'center'}}>
+        <li style={{margin: '30px', backgroundColor: 'pink'}}>
+          <Link to="/" style={{textDecoration: 'none'}} >Weekly</Link>
         </li>
-        <li>
-          <Link to="/daily">Today</Link>
+        <li style={{margin: '30px', backgroundColor: 'pink'}}>
+          <Link to="/statistics" style={{textDecoration: 'none'}} >Statistics</Link>
         </li>
-        <li>
-          <Link to="/statistics">Statistics</Link>
-        </li>
-        <li>
-          <Link to="/userpage">User page</Link>
+        <li style={{margin: '30px', backgroundColor: 'pink'}}>
+          <Link to="/userpage" style={{textDecoration: 'none'}} >User page</Link>
         </li>
         </ul> 
       </nav>
@@ -38,12 +34,11 @@ const Navbar = () => {
 
       <Routes>
         <Route path="/" element={<Weekly/>}></Route>
-        <Route path="/daily" element={<Daily/>}></Route>
         <Route path="/statistics" element={<Statistics/>}></Route>
         <Route path="/userpage" element={<Userpage/>}></Route>
       </Routes>
     </Router>
-    </>
+    </div>
   );
 }
 

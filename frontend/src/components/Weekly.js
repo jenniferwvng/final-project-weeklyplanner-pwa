@@ -101,20 +101,20 @@ const updateTask = async (itemID) => {
   }
 
   return (
-    <div>
-      <h1>Weekly page</h1>
-      <AddtaskForm />
+    <>
+    <h1>Weekly page</h1>
+    <AddtaskForm />
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
       {nameOfWeekdays.map((weekday, index) => {
         return (
-          //index same as index of getday()
-          <div style={{border: '1px solid black', display: 'flex', flexDirection: 'column'}}>
+          <div style={{border: '3px solid lightblue', margin: '10px'}}>
             <h1>{weekday}</h1>
             <p>{index}</p>
             {jsonRes.map(item => {
               return (
                 <>
                 {item.date.includes(weekday) &&               
-                <div style={{backgroundColor: 'beige', margin: '10px'}}>
+                <div style={{backgroundColor: 'beige', margin: '8px', wordWrap: 'break-word' }}>
                   <p style={{margin: '10px'}}>Task: {item.name}</p>
                   <p style={{margin: '10px'}}>Date: {item.date}</p>
                   <p style={{margin: '10px'}}>ID: {item._id}</p>      
@@ -135,6 +135,7 @@ const updateTask = async (itemID) => {
         )
       })}
     </div>
+    </>
   );
 }
 
