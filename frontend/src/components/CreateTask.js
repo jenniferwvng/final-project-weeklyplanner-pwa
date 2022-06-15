@@ -25,7 +25,6 @@ const addWeekdays = (numOfDays) => {
 const CreateTask = () => {
     const [taskName, setTaskName] = useState('');
     const [taskDate, setTaskDate] = useState(dateOfToday);
-    const [taskDone, setTaskDone] = useState(false);
 
   const createTask = async (e) => {
     e.preventDefault();
@@ -36,7 +35,7 @@ const CreateTask = () => {
             headers: {                
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({name: taskName, date: taskDate, done: taskDone})
+            body: JSON.stringify({name: taskName, date: taskDate})
         });
         const authorizedLogin = await response.json();
         console.log(authorizedLogin);                  
@@ -70,17 +69,7 @@ const CreateTask = () => {
         <option value={weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)}> {weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)} </option>
         </select>
     </label>
-    <label>
-      Done
-      <input 
-        type="text" 
-        value={taskDone} 
-        onChange={(e) => setTaskDone(e.target.value)} 
-      />
-    </label>
-    <button>
-        <input type="submit" value="Submit" />
-    </button>
+    <button type="submit">Add</button>
     </form>
     </div>
   );

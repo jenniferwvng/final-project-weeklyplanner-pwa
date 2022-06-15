@@ -14,19 +14,19 @@ import Statistics from './Statistics'
 
 const Navbar = () => {
   return (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div style={{display: 'flex', flexDirection: 'column', backgroundImage: 'linear-gradient(360deg, rgba(9,38,121,0.35477941176470584) 32%, rgba(255,139,0,0.0718662464985994) 98%)' }}>
     <Router>
     <header>
     <nav>
         <ul style={{display: 'flex', listStyle: 'none', justifyContent: 'center'}}>
-        <li style={{margin: '30px', backgroundColor: 'pink'}}>
-          <Link to="/" style={{textDecoration: 'none'}} >Weekly</Link>
+        <li style={{margin: '30px', padding: '10px', backgroundColor: '#71716F', borderRadius: '15px'}}>
+          <Link to="/" style={{textDecoration: 'none', color: 'white', fontWeight: 'bold', textTransform: 'uppercase'}} >Weekly</Link>
         </li>
-        <li style={{margin: '30px', backgroundColor: 'pink'}}>
-          <Link to="/statistics" style={{textDecoration: 'none'}} >Statistics</Link>
+        <li style={{margin: '30px', padding: '10px', backgroundColor: '#71716F', borderRadius: '15px'}}>
+          <Link to="/statistics" style={{textDecoration: 'none', color: 'white', fontWeight: 'bold', textTransform: 'uppercase'}} >Statistics</Link>
         </li>
-        <li style={{margin: '30px', backgroundColor: 'pink'}}>
-          <Link to="/userpage" style={{textDecoration: 'none'}} >User page</Link>
+        <li style={{margin: '30px', padding: '10px', backgroundColor: '#708090', borderRadius: '15px'}}>
+          <Link to="/userpage" style={{textDecoration: 'none', color: 'white', fontWeight: 'bold', textTransform: 'uppercase'}} >User page</Link>
         </li>
         </ul> 
       </nav>

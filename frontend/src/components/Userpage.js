@@ -8,6 +8,8 @@ const Userpage = () => {
   const [signinPassword, setSigninPassword] = useState('');
   const [signinEmail, setSigninEmail] = useState('');
 
+  const [loginStatus, setLoginStatus] = useState('');
+
 
 const loginStateMessage = async () => {
   try {
@@ -20,7 +22,10 @@ const loginStateMessage = async () => {
         body: JSON.stringify({email: email})
     });
     const authorizedLogin = await response.json();
-    console.log(authorizedLogin);              
+    console.log(authorizedLogin);        
+    const loginStatusMessage = authorizedLogin.loginData;
+    console.log(loginStatusMessage)
+    setLoginStatus(loginStatusMessage);
      
   } catch(err) {
     console.error(err);
@@ -85,7 +90,8 @@ const loginStateMessage = async () => {
   return (
     <div>
       <h1>Userpage page</h1>
-      <form onSubmit={validateSignUp} style={{border: '1px solid black'}}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
+      <form onSubmit={validateSignUp} style={{ border: '3px solid lightblue', margin: '10px'}}>
         <h1>Signup</h1>
       <label>
           <p>Username:</p>
@@ -102,7 +108,7 @@ const loginStateMessage = async () => {
       <input type="submit" value="Submit" />
       </form>
                 
-      <form onSubmit={validateSignin} style={{border: '1px solid black'}}>
+      <form onSubmit={validateSignin} style={{border: '3px solid lightblue', margin: '10px'}}>
         <h1>Signin</h1>
         <label>
             <p>Email:</p>
@@ -114,6 +120,7 @@ const loginStateMessage = async () => {
         </label>
         <input type="submit" value="Submit" />
         </form>
+        </div>
         
         <div>
         <button onClick={SignoutUser}>Sign out</button>
@@ -121,6 +128,7 @@ const loginStateMessage = async () => {
 
         <div>
           <button onClick={loginStateMessage}>Check login status</button>
+          <p>{loginStatus}</p>
         </div>
     </div>
   );

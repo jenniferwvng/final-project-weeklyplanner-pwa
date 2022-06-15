@@ -26,7 +26,6 @@ const addWeekdays = (numOfDays) => {
 const AddtaskForm = () => {
     const [name, setName] = useState('');
     const [date, setDate] = useState(dateOfToday);
-    const [done, setDone] = useState(false);
     const [addedTask, setAddedTask] = useState([]);
 
     const AddTask = async (e) => {
@@ -38,7 +37,7 @@ const AddtaskForm = () => {
               headers: {
                'Content-type': 'application/json; charset=UTF-8' 
               },
-              body: JSON.stringify({name, date, done})
+              body: JSON.stringify({name, date})
             });
             const addResponse = await addAction.json();
             setAddedTask(addResponse);
@@ -48,19 +47,22 @@ const AddtaskForm = () => {
     }
     
   return (
-      <div style={{ display: 'flex', flexDirection: 'column'}}>
-    <form onSubmit={AddTask}>
-    <label>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', backgroundColor: 'lightgrey', padding: '30px'}}>
+
+    <form onSubmit={AddTask} style={{alignSelf: 'center'}}>
+    <label style={{margin: '5px'}}>
       Name of task
       <input 
+        style={{border: '1px solid lightblue', borderRadius: '5px'}}
         type="text" 
         value={name} 
         onChange={(e) => setName(e.target.value)} 
       />
     </label>
-    <label>
+    <label style={{margin: '5px'}}>
       Date to be done
-        <select  onChange={(e) => setDate(e.target.value)}>
+        <select  onChange={(e) => setDate(e.target.value)}
+        style={{border: '1px solid lightblue', borderRadius: '5px'}}>
         <option value={date}>Today</option>
         {/* could I improve this using .map and making use of the built in index value? Or just move this into a function with parameter as helper function*/}
         <option value={weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)}> {weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)} </option>
@@ -71,18 +73,12 @@ const AddtaskForm = () => {
         <option value={weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)}> {weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)} </option>
         </select>
     </label>
-    <label>
-      Done
-      <input 
-        type="text" 
-        value={done} 
-        onChange={(e) => setDone(e.target.value)} 
-      />
-    </label>
-    <button>
-        <input type="submit" value="Submit" />
-    </button>
+    <button type="submit">Add</button>
     </form>
+
+    <div style={{alignSelf: 'center'}}>
+        <p>render some quotes here using random method b/w numbers of quotes as index in array from quotes saved in an array locally, to save data</p>
+    </div>
     </div>
   );
 }

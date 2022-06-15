@@ -105,19 +105,18 @@ const updateTask = async (itemID) => {
     <h1>Weekly page</h1>
     <AddtaskForm />
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
-      {nameOfWeekdays.map((weekday, index) => {
+      {nameOfWeekdays.map(weekday => {
         return (
-          <div style={{border: '3px solid lightblue', margin: '10px'}}>
-            <h1>{weekday}</h1>
-            <p>{index}</p>
+          <div style={{border: '3px solid rgb(204, 204, 196)', margin: '10px', borderRadius: '15px', backgroundColor: 'rgb(249, 247, 245)' }}>
+            <h1 style={{textAlign: 'center', color: '#708090'}}>{weekday}</h1>
             {jsonRes.map(item => {
               return (
                 <>
                 {item.date.includes(weekday) &&               
-                <div style={{backgroundColor: 'beige', margin: '8px', wordWrap: 'break-word' }}>
-                  <p style={{margin: '10px'}}>Task: {item.name}</p>
-                  <p style={{margin: '10px'}}>Date: {item.date}</p>
-                  <p style={{margin: '10px'}}>ID: {item._id}</p>      
+                <div style={{backgroundColor: 'rgb(255,250,250)', margin: '8px', wordWrap: 'break-word', borderTop: '3px solid orange', fontSize: '12px' }}>
+                  <p style={{margin: '5px'}}>Task: {item.name}</p>
+                  <p style={{margin: '5px'}}>Date: {item.date}</p>
+                  <p style={{margin: '5px'}}>ID: {item._id}</p>      
                   <label>
                     <button onClick={() => helperFunction(item._id)}>Mark as done/undone</button>
                   </label>
