@@ -142,7 +142,7 @@ app.put("/updatetask/:id", async (req, res) => {
   //const convertToObjectId = mongoose.Types.ObjectId(id);
 
   try {
-    const test = await Task.findOneAndUpdate(
+    const updatedResponse = await Task.findOneAndUpdate(
       {
         userId: app.locals.userId,
         tasks: { $elemMatch: { _id: id } }
@@ -155,7 +155,7 @@ app.put("/updatetask/:id", async (req, res) => {
       {new: false, overwrite: false, upsert: false}
     ).exec();
     
-    res.status(201).json({ test });
+    res.status(201).json({ updatedResponse });
 
   } catch(err) {
     res.status(400).json({message: 'Could not update task', errors: err.message})
