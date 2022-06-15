@@ -45,6 +45,8 @@ const AddtaskForm = () => {
               console.error(err);
           }
     }
+
+    console.log(addedTask)
     
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', backgroundColor: 'lightgrey', padding: '30px'}}>
