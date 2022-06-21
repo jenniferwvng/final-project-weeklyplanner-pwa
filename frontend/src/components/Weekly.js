@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import AddtaskForm from './AddtaskForm';
 import CreateTask from './CreateTask';
 
+import deleteicon from '../deleteicon.png'
+
 const Weekly = () => {
   const [jsonRes, setJsonRes] = useState([]);
   const [deletedTask, setDeletedTask] = useState([]);
@@ -120,12 +122,17 @@ const updateTask = async (itemID) => {
                   <label>
                     <button onClick={() => helperFunction(item._id)}>Mark as done/undone</button>
                   </label>
+                  <span style={{display: 'grid'}}>
                   {item.done ?
-                  <span style={{backgroundColor:'green'}}>done</span>
-                  : <span style={{backgroundColor:'red'}}>not done</span>
+                  <span style={{backgroundColor: 'green', justifySelf: 'stretch'}}>done</span>
+                  : <span style={{backgroundColor: 'red', justifySelf: 'stretch'}}>not done</span>
                   }
-                  <p style={{margin: '10px'}}>Done: {item.done ? 'true' : 'false'}</p>
-                  <button onClick={() => deleteTaskById(item._id)}>Delete task</button>
+                  </span>
+                  <p style={{margin: '10px'}}>Done: {item.done ? 'true' : 'false'}</p>                  
+                  <button onClick={() => deleteTaskById(item._id)} style={{border: '1px solid orange', display: 'flex', alignItems: 'center'}}>
+                    <img src={deleteicon} alt="deleteicon" style={{height: '15px', margin: '5px'}} />
+                    <p style={{fontSize: '12px'}}>Delete task</p>
+                  </button>
                 </div>}
                 </>
               )
