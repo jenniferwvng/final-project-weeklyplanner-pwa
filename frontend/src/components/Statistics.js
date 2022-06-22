@@ -17,38 +17,32 @@ const Statistics = () => {
     getUserTasks();
   }, []);
 
-  //render based on weekday (mon-sun), how may tasks per weekday is accomplished
-  //i.e. filter first on weekday, then for that task, how many are done vs undone and print the number
-
   const nameOfWeekdays = ['sun', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat'];
 
   return (
     <div>
       <h1>Statistics page</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', margin: '50px' }}>
       {nameOfWeekdays.map(weekday => {
         return (
-          <div>
+          <div style={{margin: '5px'}}>
             <h1>{weekday}</h1>
+            <div style={{backgroundColor: 'white', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(20px, 1fr))'}}>
             {jsonRes.map(item => {                     
               return (                
-                <>
+                <div>
                   {item.date.includes(weekday) && item.done &&
-                  <div style={{backgroundColor: 'green', width: '4vw', height: '8vh', margin: '5px'}}>
-                    <p>{item.name}</p>
-                    <p>{item.date}</p>
+                  <div style={{backgroundColor: 'green', width: '1vw', height: '2vh', margin: '1px'}}>
                   </div>
-
-                  }
+                  } 
                   {item.date.includes(weekday) && !item.done &&
-                  <div style={{backgroundColor: 'red', width: '4vw', height: '8vh', margin: '5px'}}>
-                    <p>{item.name}</p>
-                    <p>{item.date}</p>
+                  <div style={{backgroundColor: 'red', width: '1vw', height: '2vh', margin: '1px'}}>
                   </div>
                   }                  
-                </>
+                </div>
               )
             })}
+            </div>
           </div>
         )
       })}
@@ -57,7 +51,7 @@ const Statistics = () => {
       <h1>Done:</h1>
       {jsonRes.map(item => {
         return (
-          <>
+          <div>
           {item.done && 
             <div style={{backgroundColor: 'green', margin: '10px'}}>
             <p style={{margin: '10px'}}>Task: {item.name}</p>
@@ -65,7 +59,7 @@ const Statistics = () => {
             <p style={{margin: '10px'}}>ID: {item._id}</p>    
             </div>
           }
-          </>
+          </div>
         )
       }
       )}
@@ -78,14 +72,13 @@ const Statistics = () => {
             <p style={{margin: '10px'}}>Task: {item.name}</p>
             <p style={{margin: '10px'}}>Date: {item.date}</p>
             <p style={{margin: '10px'}}>ID: {item._id}</p>    
-            {/* instead of deletetask here, make it automatically delete tasks that are older than todays date,
-            and use this statistics page only for displaying numbers */}
             </div>
           }
           </>
         )
       }
       )}
+
     </div>
   );
 }
