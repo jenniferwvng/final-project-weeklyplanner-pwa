@@ -137,23 +137,22 @@ const updateTask = async (itemID) => {
                 <>            
                 {item.date.includes(weekday) &&            
                 <div style={{backgroundColor: 'rgb(255,250,250)', margin: '8px', wordWrap: 'break-word', borderTop: '3px solid orange', fontSize: '12px' }}>
-                  <p style={{margin: '5px'}}>Task: {item.name}</p>
-                  <p style={{margin: '5px'}}>Date: {item.date}</p>
-                  <p style={{margin: '5px'}}>ID: {item._id}</p>      
+                  <div style={{display: 'flex', justifyContent: 'end', margin: '5px'}}>
+                    <button onClick={() => deleteTaskById(item._id)} style={{border: 'none', backgroundColor: 'rgb(255,250,250)'}}>
+                      <img src={deleteicon} alt="deleteicon" style={{width: '10px'}} />
+                    </button>
+                  </div>
+                  <p style={{margin: '5px'}}><span style={{color: '#708090', fontWeight: 'bold'}}>Task:</span> {item.name}</p>
+                  <p style={{margin: '5px'}}><span style={{color: '#708090', fontWeight: 'bold'}}>Date:</span> {item.date}</p>     
                   <label>
-                    <button onClick={() => helperFunction(item._id)}>Mark as done/undone</button>
+                    <button onClick={() => helperFunction(item._id)} style={{width: '120px', margin: '5px', border: '2px solid orange'}}>Mark as done/undone</button>
                   </label>
                   <span style={{display: 'grid'}}>
                   {item.done ?
-                  <span style={{backgroundColor: '#93C572', justifySelf: 'stretch'}}>done</span>
-                  : <span style={{backgroundColor: '#C92519', justifySelf: 'stretch'}}>not done</span>
+                  <span style={{backgroundColor: '#93C572', justifySelf: 'stretch', textAlign: 'center'}}>done</span>
+                  : <span style={{backgroundColor: '#C92519', justifySelf: 'stretch', textAlign: 'center'}}>not done</span>
                   }
-                  </span>
-                  <p style={{margin: '10px'}}>Done: {item.done ? 'true' : 'false'}</p>                  
-                  <button onClick={() => deleteTaskById(item._id)} style={{border: '1px solid orange', display: 'flex', alignItems: 'center'}}>
-                    <img src={deleteicon} alt="deleteicon" style={{height: '15px', margin: '5px'}} />
-                    <p style={{fontSize: '12px'}}>Delete task</p>
-                  </button>
+                  </span>                
                 </div>}              
                 </>
               )
