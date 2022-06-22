@@ -173,7 +173,6 @@ app.put("/updatetask/:id", async (req, res) => {
   const { id } = req.params;
   const { donestatus } = req.query;
   console.log('req params:' + req.params.id + req.query.donestatus)
-  //const convertToObjectId = mongoose.Types.ObjectId(id);
 
   try {
     const updatedResponse = await Task.findOneAndUpdate(
