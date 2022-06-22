@@ -14,29 +14,30 @@ const Userpage = () => {
 
 
   useEffect(() => {
+    const loginStateMessage = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/secrets', {
+            method: 'POST',
+            headers: {                
+                'Content-Type': 'application/json',
+                'Authorization': sessionStorage.getItem('accessToken')
+            },
+            body: JSON.stringify({email: email})
+        });
+        const authorizedLogin = await response.json();
+        console.log(authorizedLogin);        
+        const loginStatusMessage = authorizedLogin.loginData;
+        console.log(loginStatusMessage)
+        setLoginStatus(loginStatusMessage);
+         
+      } catch(err) {
+        console.error(err);
+      }
+    }
     loginStateMessage();
-  }, [loginStatus, signinStatus])
+  }, [loginStatus, signinStatus, email])
 
-const loginStateMessage = async () => {
-  try {
-    const response = await fetch('http://localhost:8080/secrets', {
-        method: 'POST',
-        headers: {                
-            'Content-Type': 'application/json',
-            'Authorization': sessionStorage.getItem('accessToken')
-        },
-        body: JSON.stringify({email: email})
-    });
-    const authorizedLogin = await response.json();
-    console.log(authorizedLogin);        
-    const loginStatusMessage = authorizedLogin.loginData;
-    console.log(loginStatusMessage)
-    setLoginStatus(loginStatusMessage);
-     
-  } catch(err) {
-    console.error(err);
-  }
-}
+
 
   const validateSignin = async (e) => {
     e.preventDefault();

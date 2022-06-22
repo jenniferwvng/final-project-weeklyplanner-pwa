@@ -135,6 +135,47 @@ app.delete("/deletetask/:id", async (req, res) => {
   }
 });
 
+app.delete("/deleteoldtasks", async (req, res) => {
+  const addUpcomingDates = (numOfDays) => {
+    return new Date(new Date(new Date()).setDate(new Date().getDate() + numOfDays)).toLocaleDateString();
+  }
+
+  const weekdays = new Map();
+  weekdays.set(0, 'sun');
+  weekdays.set(1, 'mon');
+  weekdays.set(2, 'tues');
+  weekdays.set(3, 'wed');
+  weekdays.set(4, 'thurs');
+  weekdays.set(5, 'fri');
+  weekdays.set(6, 'sat');
+
+  const addWeekdays = (numOfDays) => {
+    console.log('this' + new Date(new Date(new Date(new Date()).setDate(new Date().getDate() + numOfDays))).getDay());
+    return new Date(new Date(new Date(new Date()).setDate(new Date().getDate() + numOfDays))).getDay();
+  }
+
+console.log(addUpcomingDates(3))
+  try {
+    const sevenDaysOfTasks = await Task.findOneAndUpdate(
+      { userId: app.locals.userId }, 
+      { $pull: {tasks: { date: { $nin: [
+        weekdays.get(addWeekdays(0)) + ' ' + addUpcomingDates(0),
+        weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1), 
+        weekdays.get(addWeekdays(2)) + ' ' + addUpcomingDates(2),
+        weekdays.get(addWeekdays(3)) + ' ' + addUpcomingDates(3),
+        weekdays.get(addWeekdays(4)) + ' ' + addUpcomingDates(4),
+        weekdays.get(addWeekdays(5)) + ' ' + addUpcomingDates(5),
+        weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)        
+      ] } } } }
+    ).exec();
+    
+    res.status(201).json({ sevenDaysOfTasks });
+
+  } catch(err) {
+    res.status(400).json({message: 'Could not delete old task', errors: err.message})
+  }
+});
+
 app.put("/updatetask/:id", async (req, res) => {
   const { id } = req.params;
   const { donestatus } = req.query;

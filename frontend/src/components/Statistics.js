@@ -19,12 +19,43 @@ const Statistics = () => {
 
   //render based on weekday (mon-sun), how may tasks per weekday is accomplished
   //i.e. filter first on weekday, then for that task, how many are done vs undone and print the number
+
+  const nameOfWeekdays = ['sun', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat'];
+
   return (
     <div>
       <h1>Statistics page</h1>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
+      {nameOfWeekdays.map(weekday => {
+        return (
+          <div>
+            <h1>{weekday}</h1>
+            {jsonRes.map(item => {                     
+              return (                
+                <>
+                  {item.date.includes(weekday) && item.done &&
+                  <div style={{backgroundColor: 'green', width: '4vw', height: '8vh', margin: '5px'}}>
+                    <p>{item.name}</p>
+                    <p>{item.date}</p>
+                  </div>
+
+                  }
+                  {item.date.includes(weekday) && !item.done &&
+                  <div style={{backgroundColor: 'red', width: '4vw', height: '8vh', margin: '5px'}}>
+                    <p>{item.name}</p>
+                    <p>{item.date}</p>
+                  </div>
+                  }                  
+                </>
+              )
+            })}
+          </div>
+        )
+      })}
+      </div>
+
       <h1>Done:</h1>
       {jsonRes.map(item => {
-        console.log(item.done)
         return (
           <>
           {item.done && 
@@ -40,7 +71,6 @@ const Statistics = () => {
       )}
       <h1>Not done:</h1>
       {jsonRes.map(item => {
-        console.log(item.done)
         return (
           <>
           {!item.done && 

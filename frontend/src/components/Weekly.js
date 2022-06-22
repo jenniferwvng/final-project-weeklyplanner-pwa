@@ -29,6 +29,24 @@ const Weekly = () => {
     console.log(taskId)
     }, [taskId])
 
+    useEffect(() => {
+      const deleteOldTasks = async () => {
+        try {
+          const deleteAction = await fetch(`http://localhost:8080/deleteoldtasks`, {
+            method: 'DELETE',
+            headers: {
+             'Content-type': 'application/json; charset=UTF-8' 
+            },
+          });
+          await deleteAction.json();
+          
+        } catch(err) {
+            console.error(err);
+        }
+      }
+      deleteOldTasks();
+    }, [])
+
   const deleteTaskById = async (itemId) => {
     console.log(itemId)
     try {
@@ -111,10 +129,11 @@ const updateTask = async (itemID) => {
         return (
           <div style={{border: '3px solid rgb(204, 204, 196)', margin: '10px', borderRadius: '15px', backgroundColor: 'rgb(249, 247, 245)' }}>
             <h1 style={{textAlign: 'center', color: '#708090'}}>{weekday}</h1>
-            {jsonRes.map(item => {
+            {jsonRes.map((item, index) => {
+              console.log(index)
               return (
-                <>
-                {item.date.includes(weekday) &&               
+                <>            
+                {item.date.includes(weekday) &&            
                 <div style={{backgroundColor: 'rgb(255,250,250)', margin: '8px', wordWrap: 'break-word', borderTop: '3px solid orange', fontSize: '12px' }}>
                   <p style={{margin: '5px'}}>Task: {item.name}</p>
                   <p style={{margin: '5px'}}>Date: {item.date}</p>
@@ -133,7 +152,7 @@ const updateTask = async (itemID) => {
                     <img src={deleteicon} alt="deleteicon" style={{height: '15px', margin: '5px'}} />
                     <p style={{fontSize: '12px'}}>Delete task</p>
                   </button>
-                </div>}
+                </div>}              
                 </>
               )
             })}
