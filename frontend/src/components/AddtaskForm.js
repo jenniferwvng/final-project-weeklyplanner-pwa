@@ -52,19 +52,19 @@ const AddtaskForm = () => {
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', backgroundColor: 'rgba(112, 128, 144, 0.2)', padding: '30px'}}>
 
     <form onSubmit={AddTask} style={{alignSelf: 'center'}}>
-    <label style={{margin: '5px'}}>
+    <label style={{margin: '5px', color: 'white', fontWeight: 'bold'}}>
       Name of task
       <input 
-        style={{border: '1px solid lightblue', borderRadius: '5px'}}
+        style={{border: '1px solid lightblue', borderRadius: '5px', margin: '5px'}}
         type="text" 
         value={name} 
         onChange={(e) => setName(e.target.value)} 
       />
     </label>
-    <label style={{margin: '5px'}}>
+    <label style={{margin: '5px', color: 'white', fontWeight: 'bold'}}>
       Date to be done
         <select  onChange={(e) => setDate(e.target.value)}
-        style={{border: '1px solid lightblue', borderRadius: '5px'}}>
+        style={{border: '1px solid lightblue', borderRadius: '5px', margin: '5px'}}>
         <option value={date}>Today</option>
         {/* could I improve this using .map and making use of the built in index value? Or just move this into a function with parameter as helper function*/}
         <option value={weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)}> {weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)} </option>
@@ -75,7 +75,7 @@ const AddtaskForm = () => {
         <option value={weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)}> {weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)} </option>
         </select>
     </label>
-    <button type="submit" style={{border: 'none', textTransform: 'uppercase', padding: '8px', borderRadius: '10px', margin: '10px', backgroundColor: '#708090', color: 'white'}}>Add task</button>
+    <button type="submit" style={{border: 'none', textTransform: 'uppercase', padding: '8px', borderRadius: '10px', margin: '10px', backgroundColor: '#708090', color: 'white', fontWeight: 'bold'}}>Add task</button>
     </form>
 
     <div style={{alignSelf: 'center', color: 'white'}}>

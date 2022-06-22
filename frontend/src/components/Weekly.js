@@ -67,11 +67,16 @@ const Weekly = () => {
   if(!jsonRes.length) {
   return (
     <>
-    <span style={{textAlign: 'center'}}>
-      <h1>Weekly page</h1>
-      <p>Login first to see and add tasks</p>
-      {sessionStorage.getItem('accessToken') && <CreateTask />}
-    </span>
+      <span style={{textAlign: 'center', color: 'white', textTransform: 'uppercase', fontWeight: 'bold'}}>
+      {sessionStorage.getItem('accessToken') ? 
+        <CreateTask />
+        :
+        <>
+        <h1>Weekly page</h1>
+        <p>Login first to see and add tasks</p>
+        </>
+      }
+      </span>
     </>
   )
   }
@@ -145,7 +150,7 @@ const updateTask = async (itemID) => {
                   <p style={{margin: '5px'}}><span style={{color: '#708090', fontWeight: 'bold'}}>Task:</span> {item.name}</p>
                   <p style={{margin: '5px'}}><span style={{color: '#708090', fontWeight: 'bold'}}>Date:</span> {item.date}</p>     
                   <label>
-                    <button onClick={() => helperFunction(item._id)} style={{width: '120px', margin: '5px', border: '2px solid orange'}}>Mark as done/undone</button>
+                    <button onClick={() => helperFunction(item._id)} style={{width: '120px', margin: '5px', backgroundColor: 'orange', color: 'white', fontWeight: 'bold', border: 'none', borderRadius: '5px'}}>Mark as done/undone</button>
                   </label>
                   <span style={{display: 'grid'}}>
                   {item.done ?

@@ -48,17 +48,18 @@ const CreateTask = () => {
     <div>
       <h1>Create your first task</h1>
       <form onSubmit={createTask}>
-    <label>
+    <label style={{color: 'white', fontWeight: 'bold', margin: '5px'}}>
       Name of task
       <input 
+        style={{margin: '5px', border: '1px solid lightblue', borderRadius: '5px'}}
         type="text" 
         value={taskName} 
         onChange={(e) => setTaskName(e.target.value)} 
       />
     </label>
-    <label>
+    <label style={{color: 'white', fontWeight: 'bold'}}>
       Date to be done
-        <select  onChange={(e) => setTaskDate(e.target.value)}>
+        <select  onChange={(e) => setTaskDate(e.target.value)} style={{margin: '5px', border: '1px solid lightblue', borderRadius: '5px'}}>
         <option value={taskDate}>Today</option>
         {/* could I improve this using .map and making use of the built in index value? Or just move this into a function with parameter as helper function*/}
         <option value={weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)}> {weekdays.get(addWeekdays(1)) + ' ' + addUpcomingDates(1)} </option>
@@ -69,7 +70,7 @@ const CreateTask = () => {
         <option value={weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)}> {weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)} </option>
         </select>
     </label>
-    <button type="submit">Add</button>
+    <button type="submit" style={{border: 'none', textTransform: 'uppercase', padding: '8px', borderRadius: '10px', margin: '10px', backgroundColor: '#708090', color: 'white', fontWeight: 'bold'}}>Create task</button>
     </form>
     </div>
   );
