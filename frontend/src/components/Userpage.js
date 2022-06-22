@@ -97,11 +97,13 @@ const Userpage = () => {
 
   return (
     <div>
-      <h1>Userpage page</h1>
-      <p>{loginStatus}</p>
+      <span style={{textAlign: 'center', color: '#708090', textTransform: 'uppercase'}}>
+        <h1>User page</h1>
+        <p>{loginStatus}</p>
+      </span>
       {loginStatus === 'You are now logged out' ? 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
-        <form onSubmit={validateSignUp} style={{ border: '3px solid lightblue', margin: '10px'}}>
+        <form onSubmit={validateSignUp} style={{ border: '3px solid lightblue', margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <h1>Signup</h1>
         <label>
             <p>Username:</p>
@@ -115,10 +117,10 @@ const Userpage = () => {
             <p>Password:</p>
             <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" style={{margin: '10px', border: 'none', borderRadius: '15px', padding: '10px', textTransform: 'uppercase'}}/>
         </form>
                   
-        <form onSubmit={validateSignin} style={{border: '3px solid lightblue', margin: '10px'}}>
+        <form onSubmit={validateSignin} style={{border: '3px solid lightblue', margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <h1>Signin</h1>
           <label>
               <p>Email:</p>
@@ -128,16 +130,13 @@ const Userpage = () => {
               <p>Password:</p>
               <input type="text" value={signinPassword} onChange={(e) => setSigninPassword(e.target.value)} />
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" style={{margin: '10px', border: 'none', borderRadius: '15px', padding: '10px', textTransform: 'uppercase'}}/>
           </form>
           </div>
          : 
-          <div>
-            <div>
-              <button onClick={SignoutUser}>Sign out</button>
-            </div>
-            <div>
-              <p>User info here</p>
+          <div style={{textAlign: 'center'}}>
+            <div style={{margin: '30px'}}>
+              <button onClick={SignoutUser} style={{border: 'none', padding: '15px', borderRadius: '20px', textTransform: 'uppercase'}}>Sign out</button>
             </div>
           </div> 
         }

@@ -49,7 +49,7 @@ const AddtaskForm = () => {
     console.log(addedTask)
     
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', backgroundColor: 'lightgrey', padding: '30px'}}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', backgroundColor: 'rgba(112, 128, 144, 0.2)', padding: '30px'}}>
 
     <form onSubmit={AddTask} style={{alignSelf: 'center'}}>
     <label style={{margin: '5px'}}>
@@ -75,11 +75,11 @@ const AddtaskForm = () => {
         <option value={weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)}> {weekdays.get(addWeekdays(6)) + ' ' + addUpcomingDates(6)} </option>
         </select>
     </label>
-    <button type="submit">Add</button>
+    <button type="submit" style={{border: 'none', textTransform: 'uppercase', padding: '8px', borderRadius: '10px', margin: '10px', backgroundColor: '#708090', color: 'white'}}>Add task</button>
     </form>
 
-    <div style={{alignSelf: 'center'}}>
-        <p>render some quotes here using random method b/w numbers of quotes as index in array from quotes saved in an array locally, to save data</p>
+    <div style={{alignSelf: 'center', color: 'white'}}>
+        <p>"Quote of the day"</p>
     </div>
     </div>
   );

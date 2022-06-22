@@ -20,7 +20,6 @@ const taskModel = new mongoose.Schema({
 const Task = mongoose.model('Task', taskModel);
 
 //User model
-//add crypto later for authentication signin token
 const userModel = new mongoose.Schema({
   name: {
     type: String,
@@ -62,17 +61,12 @@ const authenticateUser = async (req, res, next) => {
   }
 }
 
-// Start defining your routes here
 app.get("/", (req, res) => {
   res.send("Server response ok");
 });
 
 app.post("/createtask", async (req, res) => {
   const { name, date, done } = req.body;
-
-  //do a "if user, create task with userId same as user login userId"
-  //after first task is created (check validate with find() to see if exists), only do update task model to save in same collection
-  //what happens if findoneanddelete() on id with tasks until 0 tasks, will collection still remain? (i.e. === true)
 
   console.log(typeof app.locals.userId)
   try {
@@ -96,7 +90,6 @@ app.post("/addtask", async (req, res) => {
     { userId: app.locals.userId },
     { $push: {tasks: [{ name, date, done}]} }
   ).exec();
-  //the returned new collection will not immediately display in res.json but will in mongodb database collection
   res.status(201).json({ addTask });
   } catch(err) {
     res.status(400).json({message: 'Could not add another task', errors: err.message})
@@ -202,10 +195,6 @@ app.put("/updatetask/:id", async (req, res) => {
     res.status(400).json({message: 'Could not update task', errors: err.message})
   }
 });
-
-//navigate react? to navigate to user page after successful user account creation
-//logged out mode: if no user, render signup and signin pages
-//logged in mode: if user (either logged in or created), render signout
 
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;

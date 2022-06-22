@@ -67,9 +67,11 @@ const Weekly = () => {
   if(!jsonRes.length) {
   return (
     <>
+    <span style={{textAlign: 'center'}}>
       <h1>Weekly page</h1>
       <p>Login first to see and add tasks</p>
       {sessionStorage.getItem('accessToken') && <CreateTask />}
+    </span>
     </>
   )
   }
@@ -122,7 +124,7 @@ const updateTask = async (itemID) => {
 
   return (
     <>
-    <h1>Weekly page</h1>
+    <h1 style={{textAlign: 'center', color: 'white', textTransform: 'uppercase'}}>Weekly page</h1>
     <AddtaskForm />
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
       {nameOfWeekdays.map(weekday => {
@@ -143,8 +145,8 @@ const updateTask = async (itemID) => {
                   </label>
                   <span style={{display: 'grid'}}>
                   {item.done ?
-                  <span style={{backgroundColor: 'green', justifySelf: 'stretch'}}>done</span>
-                  : <span style={{backgroundColor: 'red', justifySelf: 'stretch'}}>not done</span>
+                  <span style={{backgroundColor: '#93C572', justifySelf: 'stretch'}}>done</span>
+                  : <span style={{backgroundColor: '#C92519', justifySelf: 'stretch'}}>not done</span>
                   }
                   </span>
                   <p style={{margin: '10px'}}>Done: {item.done ? 'true' : 'false'}</p>                  

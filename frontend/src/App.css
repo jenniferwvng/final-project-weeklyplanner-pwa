@@ -5,9 +5,8 @@
 html, body {
   margin: 0;
   padding: 0;
-}
-
-body {
-  height: 100vh;
-  width: 100vw;
+  background-image: linear-gradient(360deg, rgba(9,38,121,0.35477941176470584) 32%, rgba(255,139,0,0.0718662464985994) 98%);
+  height: 100%;
+  background-size: contain;
+  overflow: scroll;
 }

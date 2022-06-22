@@ -14,7 +14,7 @@ import Statistics from './Statistics'
 
 const Navbar = () => {
   return (
-    <div style={{display: 'flex', flexDirection: 'column', backgroundImage: 'linear-gradient(360deg, rgba(9,38,121,0.35477941176470584) 32%, rgba(255,139,0,0.0718662464985994) 98%)' }}>
+    <div style={{display: 'flex', flexDirection: 'column' }}>
     <Router>
     <header>
     <nav>
