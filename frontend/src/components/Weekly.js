@@ -64,7 +64,7 @@ const Weekly = () => {
     }
   }
 
-  if(jsonRes.length === 0) {
+  if(!jsonRes.length) {
   return (
     <>
       <span style={{textAlign: 'center', color: 'white', textTransform: 'uppercase', fontWeight: 'bold'}}>
