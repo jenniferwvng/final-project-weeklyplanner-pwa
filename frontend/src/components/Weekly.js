@@ -85,7 +85,6 @@ const Weekly = () => {
 const updateTask = async (itemID) => {
   console.log(taskId.includes(itemID))
   console.log(taskId)
-
   try {
     const updateAction = await fetch(`https://fp-weeklyplanner.herokuapp.com/updatetask/${itemID}?donestatus=${taskId.includes(itemID)}`, {
       method: 'PUT',
