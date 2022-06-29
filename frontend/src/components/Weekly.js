@@ -14,7 +14,7 @@ const Weekly = () => {
   useEffect(() => {
     const getUserTasks = async () => {
       try {
-        const response = await fetch('https://fp-weeklyplanner.herokuapp.com/gettask');
+        const response = await fetch('http://localhost:8080/gettask');
         const allTasks = await response.json();
         const taskArray = allTasks.selectTask.tasks;
         setJsonRes(taskArray);
@@ -29,28 +29,28 @@ const Weekly = () => {
     console.log(taskId)
     }, [taskId])
 
-    // useEffect(() => {
-    //   const deleteOldTasks = async () => {
-    //     try {
-    //       const deleteAction = await fetch(`http://localhost:8080/deleteoldtasks`, {
-    //         method: 'DELETE',
-    //         headers: {
-    //          'Content-type': 'application/json; charset=UTF-8' 
-    //         },
-    //       });
-    //       await deleteAction.json();
+    useEffect(() => {
+      const deleteOldTasks = async () => {
+        try {
+          const deleteAction = await fetch(`http://localhost:8080/deleteoldtasks`, {
+            method: 'DELETE',
+            headers: {
+             'Content-type': 'application/json; charset=UTF-8' 
+            },
+          });
+          await deleteAction.json();
           
-    //     } catch(err) {
-    //         console.error(err);
-    //     }
-    //   }
-    //   deleteOldTasks();
-    // }, [])
+        } catch(err) {
+            console.error(err);
+        }
+      }
+      deleteOldTasks();
+    }, [])
 
   const deleteTaskById = async (itemId) => {
     console.log(itemId)
     try {
-      const deleteAction = await fetch(`https://fp-weeklyplanner.herokuapp.com/deletetask/${itemId}`, {
+      const deleteAction = await fetch(`http://localhost:8080/deletetask/${itemId}`, {
         method: 'DELETE',
         headers: {
          'Content-type': 'application/json; charset=UTF-8' 
@@ -85,8 +85,9 @@ const Weekly = () => {
 const updateTask = async (itemID) => {
   console.log(taskId.includes(itemID))
   console.log(taskId)
+
   try {
-    const updateAction = await fetch(`https://fp-weeklyplanner.herokuapp.com/updatetask/${itemID}?donestatus=${taskId.includes(itemID)}`, {
+    const updateAction = await fetch(`http://localhost:8080/updatetask/${itemID}?donestatus=${taskId.includes(itemID)}`, {
       method: 'PUT',
       headers: {
        'Content-type': 'application/json; charset=UTF-8' 
