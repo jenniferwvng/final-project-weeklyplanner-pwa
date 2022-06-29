@@ -23,12 +23,30 @@ const Weekly = () => {
       }
     }
     getUserTasks();
+
+    const deleteOldTasks = async () => {
+      try {
+        const deleteAction = await fetch(`https://fp-weeklyplanner.herokuapp.com/deleteoldtasks`, {
+          method: 'DELETE',
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8' 
+          },
+        });
+        await deleteAction.json();
+        
+      } catch(err) {
+          console.error(err);
+      }
+    }
+    deleteOldTasks();
+    
   }, [deletedTask, updatedTask]);
 
   useEffect(() => {
     console.log(taskId)
     }, [taskId])
 
+    //this only works locally, not on netlify, why?
     // useEffect(() => {
     //   const deleteOldTasks = async () => {
     //     try {
