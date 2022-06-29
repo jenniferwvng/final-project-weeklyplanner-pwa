@@ -29,23 +29,23 @@ const Weekly = () => {
     console.log(taskId)
     }, [taskId])
 
-    useEffect(() => {
-      const deleteOldTasks = async () => {
-        try {
-          const deleteAction = await fetch(`https://fp-weeklyplanner.herokuapp.com/deleteoldtasks`, {
-            method: 'DELETE',
-            headers: {
-             'Content-type': 'application/json; charset=UTF-8' 
-            },
-          });
-          await deleteAction.json();
+    // useEffect(() => {
+    //   const deleteOldTasks = async () => {
+    //     try {
+    //       const deleteAction = await fetch(`https://fp-weeklyplanner.herokuapp.com/deleteoldtasks`, {
+    //         method: 'DELETE',
+    //         headers: {
+    //          'Content-type': 'application/json; charset=UTF-8' 
+    //         },
+    //       });
+    //       await deleteAction.json();
           
-        } catch(err) {
-            console.error(err);
-        }
-      }
-      deleteOldTasks();
-    }, [])
+    //     } catch(err) {
+    //         console.error(err);
+    //     }
+    //   }
+    //   deleteOldTasks();
+    // }, [])
 
   const deleteTaskById = async (itemId) => {
     console.log(itemId)
