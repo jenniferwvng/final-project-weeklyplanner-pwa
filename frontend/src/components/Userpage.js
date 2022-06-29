@@ -16,7 +16,7 @@ const Userpage = () => {
   useEffect(() => {
     const loginStateMessage = async () => {
       try {
-        const response = await fetch('https://fp-weeklyplanner.herokuapp.com/secrets', {
+        const response = await fetch('http://localhost:8080/secrets', {
             method: 'POST',
             headers: {                
                 'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const Userpage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://fp-weeklyplanner.herokuapp.com/signin', {
+      const response = await fetch('http://localhost:8080/signin', {
           method: 'POST',
           headers: {                
               'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ const Userpage = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('https://fp-weeklyplanner.herokuapp.com/signup', {
+      const response = await fetch('http://localhost:8080/signup', {
           method: 'POST',
           headers: {                    
               'Content-Type': 'application/json'
@@ -84,7 +84,7 @@ const Userpage = () => {
 
   const SignoutUser = async () => {
     try {
-      const response = await fetch('https://fp-weeklyplanner.herokuapp.com/signout');
+      const response = await fetch('http://localhost:8080/signout');
       const authorizedLogin = await response.json();
       sessionStorage.removeItem('accessToken');
       console.log(authorizedLogin);

@@ -32,7 +32,7 @@ const AddtaskForm = () => {
         e.preventDefault();
 
         try {
-            const addAction = await fetch('https://fp-weeklyplanner.herokuapp.com/addtask', {
+            const addAction = await fetch('http://localhost:8080/addtask', {
               method: 'POST',
               headers: {
                'Content-type': 'application/json; charset=UTF-8' 

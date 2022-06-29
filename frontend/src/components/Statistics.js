@@ -6,7 +6,7 @@ const Statistics = () => {
   useEffect(() => {
     const getUserTasks = async () => {
       try {
-        const response = await fetch('https://fp-weeklyplanner.herokuapp.com/gettask');
+        const response = await fetch('http://localhost:8080/gettask');
         const allTasks = await response.json();
         const taskArray = allTasks.selectTask.tasks;
         setJsonRes(taskArray);

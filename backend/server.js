@@ -88,7 +88,7 @@ app.post("/addtask", async (req, res) => {
     //user send post request to this endpoint for updating list of tasks instead of creating a new document
   const addTask = await Task.findOneAndUpdate(
     { userId: app.locals.userId },
-    { $push: {tasks: { name, date, done}} }
+    { $push: {tasks: [{ name, date, done}]} }
   ).exec();
   res.status(201).json({ addTask });
   } catch(err) {

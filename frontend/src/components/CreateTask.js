@@ -30,7 +30,7 @@ const CreateTask = () => {
     e.preventDefault();
 
     try {
-        const response = await fetch('https://fp-weeklyplanner.herokuapp.com/createtask', {
+        const response = await fetch('http://localhost:8080/createtask', {
             method: 'POST',
             headers: {                
                 'Content-Type': 'application/json'
