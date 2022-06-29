@@ -14,7 +14,7 @@ const Weekly = () => {
   useEffect(() => {
     const getUserTasks = async () => {
       try {
-        const response = await fetch('http://localhost:8080/gettask');
+        const response = await fetch('https://fp-weeklyplanner.herokuapp.com/gettask');
         const allTasks = await response.json();
         const taskArray = allTasks.selectTask.tasks;
         setJsonRes(taskArray);
@@ -32,7 +32,7 @@ const Weekly = () => {
     useEffect(() => {
       const deleteOldTasks = async () => {
         try {
-          const deleteAction = await fetch(`http://localhost:8080/deleteoldtasks`, {
+          const deleteAction = await fetch(`https://fp-weeklyplanner.herokuapp.com/deleteoldtasks`, {
             method: 'DELETE',
             headers: {
              'Content-type': 'application/json; charset=UTF-8' 
@@ -50,7 +50,7 @@ const Weekly = () => {
   const deleteTaskById = async (itemId) => {
     console.log(itemId)
     try {
-      const deleteAction = await fetch(`http://localhost:8080/deletetask/${itemId}`, {
+      const deleteAction = await fetch(`https://fp-weeklyplanner.herokuapp.com/deletetask/${itemId}`, {
         method: 'DELETE',
         headers: {
          'Content-type': 'application/json; charset=UTF-8' 
@@ -87,7 +87,7 @@ const updateTask = async (itemID) => {
   console.log(taskId)
 
   try {
-    const updateAction = await fetch(`http://localhost:8080/updatetask/${itemID}?donestatus=${taskId.includes(itemID)}`, {
+    const updateAction = await fetch(`https://fp-weeklyplanner.herokuapp.com/updatetask/${itemID}?donestatus=${taskId.includes(itemID)}`, {
       method: 'PUT',
       headers: {
        'Content-type': 'application/json; charset=UTF-8' 
