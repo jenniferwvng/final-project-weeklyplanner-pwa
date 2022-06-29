@@ -84,8 +84,6 @@ app.post("/addtask", async (req, res) => {
   const { name, date, done } = req.body;
 
   try {
-    //this adds tasks to the first matching userid it finds, thus have to validate that once first task is created, only let
-    //user send post request to this endpoint for updating list of tasks instead of creating a new document
   const addTask = await Task.findOneAndUpdate(
     { userId: app.locals.userId },
     { $push: {tasks: [{ name, date, done}]} }
@@ -97,11 +95,6 @@ app.post("/addtask", async (req, res) => {
 }); 
 
 app.get("/gettask", async (req, res) => {
-  console.log(app.locals.userId);
-  //when the server refreshes, its a new lifecycle, and app.locals is reset. So if we run this endpoint first, it doesnt have anything to 
-  //point to app.local.userId, since that value is created through /signup or /signin endpoint, thus we have to run that one first.
-  //Unless we force the user to login first thing they do in the website before creating any task, since we could fetch that userId and 
-  //save it to app.locals.userId to user in subsequent endpoint interactions
   try {
   const selectTask = await Task.findOne({ userId: app.locals.userId }).exec();
   res.status(201).json({ selectTask });
@@ -197,7 +190,7 @@ app.put("/updatetask/:id", async (req, res) => {
 
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
-//handle if duplicates on frontend, print message that says cannot create user due to duplicate, instead of printing user json
+
   try {
   const user = await new User({ name, email, password: bcrypt.hashSync(password, 10) });
   user.save();

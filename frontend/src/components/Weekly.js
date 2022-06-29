@@ -57,7 +57,6 @@ const Weekly = () => {
         },
       });
       const deleteResponse = await deleteAction.json();
-      //To enable re-render when change detected, and to avoid infinity loop in useEffect, we have to listen to a separate state rather than the jsonRes state from GET
       setDeletedTask(deleteResponse);
     } catch(err) {
         console.error(err);
@@ -83,22 +82,11 @@ const Weekly = () => {
 
   const nameOfWeekdays = ['sun', 'mon', 'tues', 'wed', 'thurs', 'fri', 'sat'];
 
-  //get the date of today like getdate()-1, then erase yesterdays tasks/move them to "garbage collection", e.g. if yesterday was 
-  //2022-06-11, then .include tasks that are that and filter out
-
-
-  //om default task börjar på true blir onclick false och sen i bra ordning, om den börjar på false måste man klicka dubbelt innan det blir normalt
 const updateTask = async (itemID) => {
   console.log(taskId.includes(itemID))
   console.log(taskId)
 
   try {
-    //här är problemet: om done=false i database, tryck på knapp för att vilja den ska bli true, blir istället false pga
-    //taskId.includes(itemID) blir false vid första klick på en task då den jämför om id klickats på och lagts till i array,
-    //eftersom första klick på en task id efter en ny rendering av sidan alltid börjar med en tom array, blir det alltid false som query som skickas
-    //när taskid.includes(itemID) körs, så om det är true i databasen från början, är det inga problem och databsen skrivs om till false, men är det false i databsem, skickar man false som query och databasen
-    //ändras ju inte, eftersom det redan är false - man måste därför trycka dubbelt inom samma rendering, sker en ny rendering börjar man om igen med samma problem
-    //problemet ligger alltså i logiken under toggleTaskStatusOnId då första detektion av klick på task id alltid skickar false som query - kan local storage hjälpa?
     const updateAction = await fetch(`http://localhost:8080/updatetask/${itemID}?donestatus=${taskId.includes(itemID)}`, {
       method: 'PUT',
       headers: {
@@ -106,15 +94,12 @@ const updateTask = async (itemID) => {
       },
     });
     const updateResponse = await updateAction.json();
-    //To enable re-render when change detected, and to avoid infinity loop in useEffect, we have to listen to a separate state rather than the jsonRes state from GET
     setUpdatedTask(updateResponse); 
   } catch(err) {
       console.error(err);
   }
 }
   const toggleTaskStatusOnId = (itemID) => {
-    //find() returns either matching element or undefined, !undefined === true, to run body of if statement and set value in taskId first
-    //if matching element found, !matching element === false, else statement body is run instead
     if (!taskId.find(id => id === itemID)) {
       setTaskId(taskId => [...taskId, itemID]);
     } else {
